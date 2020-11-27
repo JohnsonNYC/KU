@@ -1,0 +1,119 @@
+body {
+  font-family: sans-serif;
+}
+
+.linksContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.link {
+  font-size: 24px;
+  padding: 2px;
+  margin: 0px 10px 0px 10px;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.activeLink {
+  color: #007da0;
+}
+
+.inactiveLink {
+  color: black;
+}
+
+.pageContainer {
+  margin: auto;
+  max-width: 800px; 
+}
+
+.cardHeader {
+  align-items: center;
+  display: flex;
+}
+
+.cardHeaderIcon {
+  font-size: 24px;
+  padding-right: 10px;
+}
+
+.smallIconLeft {
+  font-size: 14px;
+  padding-right: 5px;
+}
+
+.smallIconRight {
+  font-size: 14px;
+  padding-left: 5px;
+}
+
+.dateButtonsContainer {
+  margin: auto;
+  text-align: center;
+}
+
+button:hover {
+  filter: brightness(97%);
+}
+
+button {
+  border-radius: 5px;
+  margin: 0px 2px 0px 2px;
+  padding: 10px;
+}
+
+button.activeButton {
+  background: #007da0;
+  border: 1px solid #007da0;
+  color: white;
+
+}
+
+button.inactiveButton {
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  color: black;
+}
+
+.eventCard {
+  background-color: #ffffff;
+  border: 1px solid #f0f3f5;
+  border-radius: 8px;
+  margin: 10px 20px 10px 20px;
+  padding: 15px;
+  width: 100%;
+}
+
+.tagPillContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tagPill {
+  background-color: #f0f3f5;
+  border: 1px solid #d9e0e3;
+  border-radius: 10px;
+  margin: 0px 5px 0px 5px;
+  padding: 5px; 
+}
+
+.tagStatisticsCard {
+  background-color: #ffffff;
+  border: 1px solid #f0f3f5;
+  border-radius: 8px;
+  margin: 10px 20px 10px 20px;
+  padding: 15px;
+  width: 100%;
+}
+
+.info {
+  background-color: #f0f3f5;
+  border: 1px solid #d9e0e3;
+  border-radius: 8px;
+  margin-top: 50px;
+  padding: 10px;
+  text-align: center;
+}
