@@ -36,7 +36,8 @@ export function formatDate(date) {
  * @returns {Object[]} List of events that occur before or after the given date. 
  */
 export function filterEventsByDate(events, date, when) { 
-  let parsedDateInput = moment(date).format("YYYY-MM-D")//'Year - Month - Day'
+  let parsedDateInput = moment(date).format("YYYY-MM-DD")
+  console.log(parsedDateInput)
   let filteredEvents = events.filter((event) =>{
     if(when === "before"){
       return event.date < parsedDateInput
@@ -54,9 +55,6 @@ export function filterEventsByDate(events, date, when) {
     // -     "id": "event-2",
     // -     "name": "Remote Teaching Strategies",
     // -   }
-    console.log(when)
-    console.log(parsedDateInput)
-    console.log(filteredEvents)
   return filteredEvents
 };
 
@@ -74,20 +72,19 @@ export function filterEventsByDate(events, date, when) {
  * alphabetical order
  */
 export function getNamesOfTags(event, tags) {
+  // Hashtable to avoid O(nm)
   let result = []
-  const eventTagsArray = event.tags // event tags correspond to the tagsID
-  eventTagsArray.forEach(eventTag => {
-    tags.find(tag => {
-      if(eventTag === tag.id){
-        result.push(tag.name)
-      }
-    })
+  let store = {};
+
+  for(let tag of tags){
+    store[tag.id] = tag.name
+  }
+
+  event.tags.forEach(tagId => {
+      result.push(store[tagId])
   })
   
-  if(result.length !== 0 ){
-    result.sort()
-  }
-  return result;
+  return result.sort();
 }
 
 
@@ -115,11 +112,11 @@ export function getNamesOfTags(event, tags) {
  */
 export function calculateStatisticsForTag(events, tag) {
 
-  let store = {
+  const store = {
     eventCount: 0, 
     averageRegistration: null, 
     mostPopularEvent:null
-  };
+  }
   
   let totalAttendees = 0;
   let maxNumberOfAttendees = 0;
@@ -128,25 +125,24 @@ export function calculateStatisticsForTag(events, tag) {
   for(let event of events){
     // For each event
     if(event.tags.includes(tag.id)){// when the event matches the tag
-      let eventSize = event.registeredUsers.length // number of participants to event 
+      const eventSize = event.registeredUsers.length // number of participants to event 
 
-      store.eventCount = (store.eventCount+=1) || 1 // increase everytime an event has a tag
-      totalAttendees = totalAttendees += eventSize // sum of all users for events with this tag
-      // 
-      
+      store.eventCount++ // increase everytime an event has this tag
+      totalAttendees += eventSize // sum of all users for events with this tag
+    
       if(eventSize > maxNumberOfAttendees){ // if this event has more users than tracker
         popularEvent = event // update this tracker
-        store.mostPopularEvent = event.name // update it with this one
+        store.mostPopularEvent = popularEvent.name // update it with this one
         maxNumberOfAttendees = eventSize // update this tracker
       }else if(eventSize === maxNumberOfAttendees){ // if they are both equal 
-        let sortIndicator = event.name.localeCompare(popularEvent.name) // pick the first alphabetically sorted item
+        const sortIndicator = event.name.localeCompare(popularEvent.name) // pick the first alphabetically sorted item
         if(sortIndicator === 1){
           store.mostPopularEvent = popularEvent.name
         }else if(sortIndicator === -1){
           store.mostPopularEvent = event.name
         }
       }
-      store.averageRegistration = (Math.round((totalAttendees/store.eventCount)*100)/100).toString();
+      store.averageRegistration = (totalAttendees/store.eventCount).toFixed(2);
     }
   }  
   return store;
